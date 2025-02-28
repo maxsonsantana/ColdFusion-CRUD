@@ -161,43 +161,52 @@
     </div>
 </cfoutput>
 
-<!---BOTÕES--->
-<div class="container" id="botoes">
-    <!--- Botão para abrir o modal --->
-    <div class="row">
-        <div class="col">
-            <form>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pessoaModal">
-                    <cfif form.id EQ ''>Adicionar Pessoa<cfelse>Editar Pessoa</cfif>
-                </button>
-            </form>
+<head>
+    <title>Menu ColdFusion</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<!---MENU--->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <!-- Logo ou Nome do Site -->
+        <a class="navbar-brand" href="index.cfm">CRUD CouldFusion</a>
+
+        <!-- Botão de Toggle para Mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Itens do Menu -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <!-- Link para Abrir o Modal -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#pessoaModal">
+                        <cfif form.id EQ ''>Adicionar Pessoa<cfelse>Editar Pessoa</cfif>
+                    </a>
+                </li>
+
+                <!-- Link para Gerar PDF -->
+                <li class="nav-item">
+                    <a href="gerarPDF.cfm" class="nav-link btn btn-info me-2" target="_blank">
+                        📄 Gerar PDF
+                    </a>
+                </li>
+
+                <!-- Link para Gerar XLS -->
+                <li class="nav-item">
+                    <a href="gerarXLS.cfm" class="nav-link btn btn-success" target="_blank">
+                        📊 Gerar XLS
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
+</nav>
 
-    <!--- Botão para gerar PDF --->
-    <div class="row">
-        <div class="col">
-            <form action="gerarPDF.cfm" method="post" target="_blank">
-                <button type="submit" class="btn btn-info">
-                    📄 Gerar PDF
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!--- Botão para gerar XLS --->
-    <div class="row">
-        <div class="col">
-            <form action="gerarXLS.cfm" method="post" target="_blank">
-                <button type="submit" class="btn btn-success">
-                    📊 Gerar XLS
-                </button>
-            </form>
-        </div>
-    </div>
-
-</div>
-
+<!-- Script do Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <!--- LISTA DE USUÁRIOS --->
 <cfoutput>
