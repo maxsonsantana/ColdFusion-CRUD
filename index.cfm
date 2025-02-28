@@ -75,7 +75,10 @@
 
 <!--- LISTAR TODOS OS USUÁRIOS --->
 <cfquery name="pessoa" datasource="#DSN#">
-    SELECT * FROM pessoa ORDER BY id DESC
+    SELECT p.* , pr.nome AS nome_profissao
+    FROM pessoa p
+    JOIN profissao pr ON p.id_profissao = pr.id
+    ORDER BY id DESC
 </cfquery>
 
 <!--- Importando o Bootstrap --->
@@ -223,7 +226,7 @@
                                     <td>#pessoa.nome#</td>
                                     <td>#pessoa.sobrenome#</td>
                                     <td>#pessoa.idade#</td>
-                                    <td>#pessoa.id_profissao#</td>
+                                    <td>#pessoa.nome_profissao#</td>
                                     <td class="text-center">
                                         <!-- Editar -->
                                         <a href="index.cfm?acao=editar&id=#pessoa.id#" class="btn btn-warning btn-sm">
