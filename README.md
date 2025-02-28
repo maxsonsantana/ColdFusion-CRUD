@@ -1,5 +1,5 @@
 # CouldFusion-CRUD
-Simples projeto em CRUD com modal em CouldFusion(vesão 10)
+Simples projeto em CRUD com modal em CouldFusion(versão 10)
 
 - **BANCO DE DADOS**
 	O banco de dados está em mysql, mas pode utilizar qualquer outro banco e adicionar no DataSource do painel administratido do CF
