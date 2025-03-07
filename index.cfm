@@ -22,6 +22,8 @@
         FROM pessoa p
         JOIN profissao pr ON p.id_profissao = pr.id
         WHERE p.id = <cfqueryparam value="#url.id#" cfsqltype="cf_sql_integer">
+        ORDER BY P.NOME ASC
+        LIMIT 10
     </cfquery>
 
     <cfif dados_editar.recordcount EQ 1>
@@ -48,7 +50,7 @@
     <cflocation url="index.cfm" addtoken="false">
 </cfif>
 
-<!--- EDITAR DADOS --->
+<!--- EDITA OS DADOS(UPDATE) --->
 <cfif structKeyExists(url, "acao") AND url.acao EQ "salvar" AND structKeyExists(url, "id")>
     <cfquery datasource="#DSN#">
         UPDATE pessoa 
@@ -69,12 +71,13 @@
     <cflocation url="index.cfm" addtoken="false">
 </cfif>
 
-<!--- LISTAR TODOS OS USUÁRIOS --->
+<!--- LISTAR OS 10 PRIMEIROS USUÁRIOS --->
 <cfquery name="pessoa" datasource="#DSN#">
     SELECT p.* , pr.nome AS nome_profissao
     FROM pessoa p
-    JOIN profissao pr ON p.id_profissao = pr.id
-    ORDER BY id DESC
+    JOIN profissao pr ON p.id_profissao = pr.id    
+    ORDER BY P.NOME ASC
+    LIMIT 10
 </cfquery>
 
 <!--- Importando o Bootstrap --->
