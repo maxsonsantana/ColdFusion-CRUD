@@ -1,0 +1,29 @@
+/* Estilo para a tabela */
+.table-custom {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Força a tabela a respeitar as larguras das colunas */
+}
+
+.table-custom th,
+.table-custom td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adiciona "..." se o texto for muito longo */
+    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+}
+
+.table-custom th {
+    background-color: #343a40;
+    color: white;
+}
+
+.table-custom tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table-custom .text-center {
+    text-align: center;
+}
