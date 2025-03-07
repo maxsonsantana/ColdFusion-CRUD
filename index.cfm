@@ -18,7 +18,6 @@
 <!--- BUSCAR DADOS PARA EDIÇÃO --->
 <cfif structKeyExists(url, "acao") AND url.acao EQ "editar" AND structKeyExists(url, "id")>
     <cfquery name="dados_editar" datasource="#DSN#">
-        <!--- SELECT * FROM pessoa WHERE id = <cfqueryparam value="#url.id#" cfsqltype="cf_sql_integer"> --->
         SELECT p.*, pr.nome AS nome_profissao
         FROM pessoa p
         JOIN profissao pr ON p.id_profissao = pr.id
@@ -48,9 +47,6 @@
     </cfquery>
     <cflocation url="index.cfm" addtoken="false">
 </cfif>
-
-
-
 
 <!--- EDITAR DADOS --->
 <cfif structKeyExists(url, "acao") AND url.acao EQ "salvar" AND structKeyExists(url, "id")>
@@ -84,6 +80,7 @@
 <!--- Importando o Bootstrap --->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="style.css">
 
 <cfoutput>
     <!-- Modal -->
@@ -113,7 +110,7 @@
                             <input type="number" class="form-control" name="idade" value="#form.idade#" required>
                         </div>
 
-                       <!--- Consulta ao banco para obter as profissões --->
+                        <!--- Consulta ao banco para obter as profissões --->
                         <cfquery name="getProfissoes" datasource="#DSN#">
                             SELECT id, nome FROM profissao ORDER BY nome ASC
                         </cfquery>
@@ -136,13 +133,10 @@
                         <!--- Script para atualizar o campo id_profissao --->
                         <script>
                             document.addEventListener("DOMContentLoaded", function() {
-                                // Captura o dropdown list e o campo id_profissao
                                 const dropdown = document.getElementById("nome_id_profissao");
                                 const idProfissaoInput = document.getElementById("id_profissao");
 
-                                // Adiciona um listener para o evento de mudança no dropdown
                                 dropdown.addEventListener("change", function() {
-                                    // Atualiza o valor do campo id_profissao com o valor selecionado no dropdown
                                     idProfissaoInput.value = dropdown.value;
                                 });
                             });
@@ -161,43 +155,41 @@
     </div>
 </cfoutput>
 
-<!---BOTÕES--->
-<div class="container" id="botoes">
-    <!--- Botão para abrir o modal --->
-    <div class="row">
-        <div class="col">
-            <form>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pessoaModal">
-                    <cfif form.id EQ ''>Adicionar Pessoa<cfelse>Editar Pessoa</cfif>
-                </button>
-            </form>
+<head>
+    <title>Menu ColdFusion</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<!---MENU--->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.cfm">CRUD CouldFusion</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="#" class="nav-link btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#pessoaModal">
+                        <cfif form.id EQ ''>Adicionar Pessoa<cfelse>Editar Pessoa</cfif>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="gerarPDF.cfm" class="nav-link btn btn-info me-2" target="_blank">📄 Gerar PDF</a>
+                </li>
+                <li class="nav-item">
+                    <a href="gerarXLS.cfm" class="nav-link btn btn-success" target="_blank">📊 Gerar XLS</a>
+                </li>
+            </ul>
         </div>
     </div>
+</nav>
 
-    <!--- Botão para gerar PDF --->
-    <div class="row">
-        <div class="col">
-            <form action="gerarPDF.cfm" method="post" target="_blank">
-                <button type="submit" class="btn btn-info">
-                    📄 Gerar PDF
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!--- Botão para gerar XLS --->
-    <div class="row">
-        <div class="col">
-            <form action="gerarXLS.cfm" method="post" target="_blank">
-                <button type="submit" class="btn btn-success">
-                    📊 Gerar XLS
-                </button>
-            </form>
-        </div>
-    </div>
-
+<!--- Campo de Pesquisa --->
+<div class="mb-3">
+    <input type="text" id="pesquisaNome" class="form-control" placeholder="🔍 Digite um nome para buscar..." onkeyup="buscarPessoa()">
 </div>
-
 
 <!--- LISTA DE USUÁRIOS --->
 <cfoutput>
@@ -208,18 +200,18 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-striped table-bordered table-custom">
                         <thead class="table-dark">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
                                 <th>Sobrenome</th>
                                 <th>Idade</th>
-                                <th>profissao</th>
+                                <th>Profissão</th>
                                 <th class="text-center">Ações</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="resultadoPesquisa">
                             <cfloop query="pessoa">
                                 <tr>
                                     <td>#pessoa.id#</td>
@@ -228,15 +220,8 @@
                                     <td>#pessoa.idade#</td>
                                     <td>#pessoa.nome_profissao#</td>
                                     <td class="text-center">
-                                        <!-- Editar -->
-                                        <a href="index.cfm?acao=editar&id=#pessoa.id#" class="btn btn-warning btn-sm">
-                                         		   ✏️ Editar
-                                        </a>
-                                        <!-- Excluir -->
-                                        <a href="index.cfm?acao=excluir&id=#pessoa.id#" class="btn btn-danger btn-sm" 
-                                           onclick="return confirm('Tem certeza que deseja excluir?');">
-                                        		    🗑 Excluir
-                                        </a>
+                                        <a href="index.cfm?acao=editar&id=#pessoa.id#" class="btn btn-warning btn-sm">✏️ Editar</a>
+                                        <a href="index.cfm?acao=excluir&id=#pessoa.id#" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir?');">🗑 Excluir</a>
                                     </td>
                                 </tr>
                             </cfloop>
@@ -257,4 +242,42 @@
             modal.show();
         }
     });
+</script>
+
+<!--- Script para busca AJAX --->
+<script>
+function buscarPessoa() {
+    const nome = document.getElementById("pesquisaNome").value;
+
+    fetch("buscar_pessoa.cfm", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `nome=${encodeURIComponent(nome)}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("resultadoPesquisa").innerHTML = data;
+        ajustarTabela(); // Ajusta o layout da tabela após carregar os dados
+    })
+    .catch(error => console.error("Erro na busca:", error));
+}
+
+function ajustarTabela() {
+    const headers = document.querySelectorAll("thead th");
+    const rows = document.querySelectorAll("tbody tr");
+
+    headers.forEach((header, index) => {
+        const headerWidth = header.offsetWidth; // Largura da coluna no cabeçalho
+        rows.forEach(row => {
+            if (row.children[index]) {
+                row.children[index].style.width = `${headerWidth}px`; // Aplica a mesma largura às células
+            }
+        });
+    });
+}
+
+// Ajusta o layout da tabela ao carregar a página
+document.addEventListener("DOMContentLoaded", function() {
+    ajustarTabela();
+});
 </script>
