@@ -161,77 +161,38 @@
 <head>
     <title>Menu ColdFusion</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-<<<<<<< HEAD
-=======
     <link rel="stylesheet" href="style.css">
->>>>>>> m1
 </head>
 
 <!---MENU--->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-<<<<<<< HEAD
-        <!-- Logo ou Nome do Site -->
-        <a class="navbar-brand" href="index.cfm">CRUD CouldFusion</a>
-
-        <!-- Botão de Toggle para Mobile -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Itens do Menu -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <!-- Link para Abrir o Modal -->
-=======
         <a class="navbar-brand" href="index.cfm">CRUD CouldFusion</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
->>>>>>> m1
                 <li class="nav-item">
                     <a href="#" class="nav-link btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#pessoaModal">
                         <cfif form.id EQ ''>Adicionar Pessoa<cfelse>Editar Pessoa</cfif>
                     </a>
                 </li>
-<<<<<<< HEAD
-
-                <!-- Link para Gerar PDF -->
-                <li class="nav-item">
-                    <a href="gerarPDF.cfm" class="nav-link btn btn-info me-2" target="_blank">
-                        📄 Gerar PDF
-                    </a>
-                </li>
-
-                <!-- Link para Gerar XLS -->
-                <li class="nav-item">
-                    <a href="gerarXLS.cfm" class="nav-link btn btn-success" target="_blank">
-                        📊 Gerar XLS
-                    </a>
-=======
                 <li class="nav-item">
                     <a href="gerarPDF.cfm" class="nav-link btn btn-info me-2" target="_blank">📄 Gerar PDF</a>
                 </li>
                 <li class="nav-item">
                     <a href="gerarXLS.cfm" class="nav-link btn btn-success" target="_blank">📊 Gerar XLS</a>
->>>>>>> m1
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<<<<<<< HEAD
-<!-- Script do Bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-=======
 <!--- Campo de Pesquisa --->
 <div class="mb-3">
     <input type="text" id="pesquisaNome" class="form-control" placeholder="🔍 Digite um nome para buscar..." onkeyup="buscarPessoa()">
 </div>
->>>>>>> m1
 
 <!--- LISTA DE USUÁRIOS --->
 <cfoutput>
