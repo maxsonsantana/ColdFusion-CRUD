@@ -14,7 +14,8 @@
     FROM pessoa p
     JOIN profissao pr ON p.id_profissao = pr.id
     WHERE p.nome LIKE <cfqueryparam value="%#form.nome#%" cfsqltype="cf_sql_varchar">
-    ORDER BY p.id DESC
+    ORDER BY p.nome ASC
+    LIMIT 10
 </cfquery>
 
 <!--- Retornar os resultados em formato HTML --->
